@@ -1,0 +1,23 @@
+{
+    "name": "maris/active-record",
+    "description": "Active Record pattern doodle",
+    "type": "project",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8.2"
+    },
+    "authors": [
+        {
+            "name": "Maris Udris",
+            "email": "maris.udris.lv@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "harlequiin\\Patterns\\ActiveRecord\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
