@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace harlequiin\Patterns\ActiveRecord;
+namespace harlequiin\Patterns\ActiveRecord\Persistence;
+
+use harlequiin\Patterns\ActiveRecord\DatabaseInterface;
 
 class MySqlDatabase implements DatabaseInterface
 {

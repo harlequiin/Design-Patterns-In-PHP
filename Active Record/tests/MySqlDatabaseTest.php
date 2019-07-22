@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use harlequiin\Patterns\ActiveRecord\MySqlDatabase;
+use harlequiin\Patterns\ActiveRecord\Persistence\MySqlDatabase;
 use PHPUnit\Framework\TestCase;
 
 class MySqlDatabaseTest extends TestCase

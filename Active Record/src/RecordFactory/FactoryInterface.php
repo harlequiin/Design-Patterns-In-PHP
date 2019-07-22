@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace harlequiin\Patterns\ActiveRecord;
+namespace harlequiin\Patterns\ActiveRecord\RecordFactory;
 
 use harlequiin\Patterns\ActiveRecord\ActiveRecord;
 

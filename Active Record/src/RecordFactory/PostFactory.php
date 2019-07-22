@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace harlequiin\Patterns\ActiveRecord;
+namespace harlequiin\Patterns\ActiveRecord\RecordFactory;
 
-use harlequiin\Patterns\ActiveRecord\FactoryInterface;
+use harlequiin\Patterns\ActiveRecord\ActiveRecord;
+use harlequiin\Patterns\ActiveRecord\Post;
+use harlequiin\Patterns\ActiveRecord\DatabaseInterface;
 
 class PostFactory implements FactoryInterface
 {

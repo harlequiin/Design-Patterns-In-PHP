@@ -2,8 +2,8 @@
 declare(strict_types=1);
 
 use harlequiin\Patterns\ActiveRecord\DatabaseInterface;
-use harlequiin\Patterns\ActiveRecord\UserFactory;
-use harlequiin\Patterns\ActiveRecord\PostFactory;
+use harlequiin\Patterns\ActiveRecord\RecordFactory\UserFactory;
+use harlequiin\Patterns\ActiveRecord\RecordFactory\PostFactory;
 use harlequiin\Patterns\ActiveRecord\User;
 use PHPUnit\Framework\TestCase;
 

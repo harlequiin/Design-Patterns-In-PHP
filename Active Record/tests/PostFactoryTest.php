@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use harlequiin\Patterns\ActiveRecord\PostFactory;
-use PHPUnit\Framework\TestCase;
+use harlequiin\Patterns\ActiveRecord\RecordFactory\PostFactory;
 use harlequiin\Patterns\ActiveRecord\DatabaseInterface;
 use harlequiin\Patterns\ActiveRecord\Post;
+use PHPUnit\Framework\TestCase;
 
 class PostFactoryTest extends TestCase
 {
