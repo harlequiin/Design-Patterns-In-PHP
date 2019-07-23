@@ -1,0 +1,21 @@
+{
+    "name": "maris/front-controller",
+    "description": "Front Controller example",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Maris Udris",
+            "email": "maris.udris.lv@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "harlequiin\\Patterns\\FrontController\\": "src/"
+        }
+    },
+    "require": {
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0",
+        "zendframework/zend-diactoros": "^2.1"
+    }
+}
