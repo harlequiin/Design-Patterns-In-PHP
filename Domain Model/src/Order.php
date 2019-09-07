@@ -31,10 +31,9 @@ class Order extends AbstractEntity
         return $this->customer;
     }
 
-    public function setCustomer(Customer $customer): Order
+    public function setCustomer(Customer $customer): void
     {
         $this->customer= $customer;
-        return $this;
     }
 
     public function getOrderNumber()
@@ -42,10 +41,9 @@ class Order extends AbstractEntity
        return $this->orderNumber; 
     }
 
-    public function setOrderNumber($orderNumber): Order
+    public function setOrderNumber($orderNumber): void
     {
         $this->orderNumber = $orderNumber;
-        return $this;
     }
 
     public function getDescription(): string
@@ -53,10 +51,9 @@ class Order extends AbstractEntity
        return $this->description; 
     }
 
-    public function setDescription(string $description): Order
+    public function setDescription(string $description): void
     {
         $this->description = $description;
-        return $this;
     }
 
     public function getTotal(): float
@@ -64,7 +61,7 @@ class Order extends AbstractEntity
         return $this->total;
     }
 
-    public function setTotal(float $total)
+    public function setTotal(float $total): void
     {
         $this->total = $total;
     }

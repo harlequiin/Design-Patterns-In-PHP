@@ -29,10 +29,9 @@ class Invoice extends AbstractEntity
         return $this->order;
     }
 
-    public function setOrder(Order $order): Invoice
+    public function setOrder(Order $order): void
     {
         $this->order = $order;
-        return $this;
     }
 
     public function getInvoiceDate(): \DateTime
@@ -40,10 +39,9 @@ class Invoice extends AbstractEntity
        return $this->invoiceDate;
     }
 
-    public function setInvoiceDate(\DateTime $invoiceDate): Invoice
+    public function setInvoiceDate(\DateTime $invoiceDate): void
     {
         $this->invoiceDate = $invoiceDate;
-        return $this;
     }
 
     public function getTotal(): float
