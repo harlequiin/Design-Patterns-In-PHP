@@ -2,9 +2,6 @@
     "name": "maris/domain-model",
     "description": "Domain Model example",
     "type": "project",
-    "require-dev": {
-        "phpunit/phpunit": "^8.2"
-    },
     "authors": [
         {
             "name": "Maris Udris",
@@ -16,7 +13,4 @@
             "harlequiin\\Patterns\\DomainModel\\": "src/"
         }
     },
-    "config": {
-        "bin-dir": "bin/"
-    }
 }
