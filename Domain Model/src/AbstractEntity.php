@@ -8,6 +8,9 @@ namespace harlequiin\Patterns\DomainModel\Entity;
  */
 abstract class AbstractEntity
 {
+    /**
+     * @var int
+     */
     protected $id;
 
     public function getId()
@@ -15,7 +18,7 @@ abstract class AbstractEntity
         return $this->id;
     }
 
-    public function setId($id): void
+    public function setId(int $id): void
     {
         $this->id = $id;
     }

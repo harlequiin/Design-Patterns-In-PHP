@@ -14,6 +14,9 @@ class Order extends AbstractEntity
      */
     protected $customer;
 
+    /**
+     * @var int
+     */
     protected $orderNumber;
 
     /**
@@ -36,12 +39,12 @@ class Order extends AbstractEntity
         $this->customer= $customer;
     }
 
-    public function getOrderNumber()
+    public function getOrderNumber(): int
     {
        return $this->orderNumber; 
     }
 
-    public function setOrderNumber($orderNumber): void
+    public function setOrderNumber(int $orderNumber): void
     {
         $this->orderNumber = $orderNumber;
     }
