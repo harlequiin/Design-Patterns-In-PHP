@@ -1,0 +1,25 @@
+{
+    "name": "maris/table-data-gateway",
+    "description": "learning project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Maris Udris",
+            "email": "maris.udris.lv@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "psy/psysh": "*",
+        "phpunit/phpunit": "^8.0",
+        "squizlabs/php_codesniffer": "^3.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "harlequiin\\Patterns\\TableDataGateway\\": "src"
+        }
+    },
+    "config": {
+        "bin-dir": "bin/"
+    }
+}
