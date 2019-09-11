@@ -22,7 +22,8 @@ configure what type of structure the query returns - specifying FETCH_ASSOC
 value in PDO connection options or in a fetch method will return an associative
 array). Maps don't have an explicit interface - a better solution is to use
 some sort of _Data Transfer Object_. It's another object to create but it can
-be used elsewhere.  
+be used elsewhere. In PHP you can make use of PDO::FETCH_OBJ option for the
+connection and data fetching.  
 In many environments that use _Record Set_, such a .NET, you can simply use the
 set itself since it gets returned from the SQL query - however it can get quite
 messy - ideally an in-memory object shouldn't know anything about the SQL
@@ -37,7 +38,11 @@ look out for.
 
 ### General Structure
 
-
+A _Table Data Gateway_ has a simple interface, mostly consisting of find
+methods to get data from the database, and update, insert, and delete methods
+to modify it. Each method puts the input parameters into a SQL call and executes
+the SQL against the database.The Table Data Gateway is usually stateless, as
+its role is to push data back and forth.
 
 ### When To Use It
 
@@ -63,5 +68,17 @@ data and using stored procedures can be _hidden_ under the same interface.
 
 ![Our example UML diagram][1]
 
+**TableGateway** is our abstract superclass. It defines default _find_ and _delete_ 
+methods which both use an _id_ parameter. It also defines abstract _insert_ and
+_update_ methods, with _update_ accepting a mandatory id parameter.  
+**UserGateway** and **PostGateway** both define their specific find methods -
+_findByUsername_ and _findByUser_ respectively, and implement the abstract
+_insert_ and _update_ methods according to their specific needs. We could
+define _insert_ and _update_ methods in the superclass (perhaps each of them
+accepting an associative array of fields => values) and thus avoid the
+duplication, however this is a trivial enough example and changes/extensions
+wouldn't be too hard to make. And I've chosen to implement the methods with a
+parameter for each relevant database field to make the method signatures more
+consistent accross the classes.
 
-[1]: 
+[1]: https://i.ibb.co/xDwcd85/Table-Gateway.png
