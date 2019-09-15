@@ -3,39 +3,62 @@ declare(strict_types=1);
 
 namespace harlequiin\Patterns\ActiveRecord;
 
+use DateTime;
+
 class Post extends ActiveRecord
 {
     /**
-     * @var integer|string|null ID of the particular post record
-     * null if the post object is new (unpersisted)
+     * @var string post's content
      */
-    protected $id;
+    protected $content;
 
     /**
-     * @var array array of post fields
+     * @var DateTime DateTime date posted
      */
-    protected $fields;
+    protected $date;
 
-    public function __construct(
-        DatabaseInterface $db, 
-        array $fields
-    )
+    public function getContent(): string
     {
-        parent::__construct($db, "user");
-
-        $this->id = $fields["id"] ?? null;
-        unset($fields["id"]);
-        $this->fields = $fields;
+        return $this->content;
     }
 
-    public function getText(): string
+    public function setContent(string $text): void
     {
-       return $this->fields["text"]; 
+        $this->content = $text;
     }
 
-    public function setText(string $text): void
+    public function getDate(): DateTime
     {
-       $this->fields["text"] = $text; 
+        return $this->date;
     }
 
+    public function setDate(DateTime $date): void
+    {
+        $this->date = $date;
+    }
+
+    protected function collectProperties(): array
+    {
+        return [
+            "content" => $this->getContent(),
+            "date" => $this->getDate()
+        ];
+    }
+
+    public static function find(int $id): Post
+    {
+        $sql = "SELECT * FROM " . self::TABLE . " WHERE `id` = :id ;";
+
+        try {
+            $pdoStatement = $this->pdo->prepare($sql);
+            $pdoStatement->execute(["id" => $id]);
+            $pdoObject = $pdoStatement->fetch(PDO::FETCH_OBJ);
+            $post = new Post($this->pdo);
+            $post->setText($pdoObject->id);
+            $post->setDate($pdoObject->username);
+            return $post;
+        } catch (Exception $e) {
+            throw new ActiveRecordException($e->getMessage());
+        }
+    }
 }

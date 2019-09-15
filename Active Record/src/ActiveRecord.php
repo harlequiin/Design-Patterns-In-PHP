@@ -1,45 +1,111 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace harlequiin\Patterns\ActiveRecord;
 
-class ActiveRecord
+use PDO;
+use PDOException;
+use Exception;
+
+abstract class ActiveRecord
 {
     /**
-     * @var DatabaseInterface database class which provides lower lever
-     * modification query options
+     * @var PDO PHP Data Object
      */
-    protected $db;
+    protected $pdo;
 
     /**
-     * @var string table for the particular record set
+     * @var string table name
      */
-    protected $table;
+    protected const TABLE = "";
 
-    public function __construct(DatabaseInterface $db, string $table)
+    /**
+     * @var int ID of the record
+     */
+    protected $id;
+
+    public function __construct(PDO $pdo)
     {
-       $this->db = $db; 
-       $this->table = $table;
+        $this->pdo = $pdo;
     }
 
-    public function save()
+    public function getId(): int
     {
-        try {
-            $this->db->create($this->table, $this->fields);
-        } catch (\DatabaseException $e) {
-            $this->db->update($this->table, $this->id ,$this->fields);
-        } catch (\DatabaseException $e) {
-            throw new ModelException($e->getMessage());
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function insert(): void
+    {
+        $properties = $this->collectProperties();
+        $keys = "";
+        $placeholders = "";
+
+        foreach (array_keys($properties) as $key) {
+            $keys .= "`{$key}`, ";
+            $placeholders .= ":{$key}, ";
         }
-        
+        $keys = \rtrim($keys, ", ");
+        $placeholders = \rtrim($placeholders, ", ");
+
+        $sql  = "INSERT INTO " . static::TABLE . "(";
+        $sql .= $keys;
+        $sql .= ") VALUES (";
+        $sql .= $placeholders;
+        $sql .= ") ;";
+
+        try {
+            $stmnt = $this->pdo->prepare($sql);
+            $stmnt->execute($properties);
+
+            if (!$stmnt->rowCount()) {
+                throw new PDOException('Creation failed.');
+            }
+        } catch (Exception $e) {
+            throw new ActiveRecordException($e->getMessage());
+        }
+    }
+
+    abstract protected function collectProperties(): array;
+
+    public function update(): void
+    {
+        $properties = $this->collectProperties();
+        $properties["id"] = $this->getId();
+
+        $setValues = "";
+
+        foreach (array_keys($properties) as $key) {
+            $setValues .= "`{$key}` = :{$key}, ";
+        }
+        $setValues = \rtrim($setValues, ", ");
+        $sql  = "UPDATE " . static::TABLE . "SET ";
+        $sql .= $setValues;
+        $sql .= " WHERE `id` = :id;";
+
+        try {
+            $stmnt = $this->pdo->prepare($sql);
+            $stmnt->execute($properties);
+
+            if (!$stmnt->rowCount()) {
+                throw new PDOException('Update failed.');
+            }
+        } catch (Exception $e) {
+            throw new ActiveRecordException($e->getMessage());
+        }
     }
 
     public function delete()
     {
+        $sql = "DELETE FROM " . static::TABLE . "WHERE id = :id";
         try {
-            $this->db->deleteById($this->table, $this->id);
-        } catch (\DatabaseException $e) {
-            throw new ModelException($e->getMessage());
-        } 
+            $this->pdo->prepare($sql)->execute(["id" => $this->getId()]);
+        } catch (Exception $e) {
+            throw new ActiveRecordException($e->getMessage());
+        }
     }
 }

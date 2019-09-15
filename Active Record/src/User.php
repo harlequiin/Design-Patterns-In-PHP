@@ -3,43 +3,70 @@ declare(strict_types=1);
 
 namespace harlequiin\Patterns\ActiveRecord;
 
+use PDO;
+use TheSeer\Tokenizer\Exception;
+
 class User extends ActiveRecord
 {
     /**
-     * @var integer|string|null ID of the particular user record
-     * null if new (unpersisted) user object
+     * @var string table name
      */
-    protected $id;
+    protected const TABLE = "user";
 
     /**
-     * @var array array of user fields
+     * @var string user's username
      */
-    protected $fields;
 
-    public function __construct(
-        DatabaseInterface $db, 
-        array $fields
-    )
-    {
-        parent::__construct($db, "user");
+    private $username;
+    /**
+     * @var int user's age
+     */
 
-        $this->id = $fields["id"] ?? null;
-        unset($fields["id"]);
-        $this->fields = $fields;
-    }
-
-    public function getUserId()
-    {
-        return $this->id;
-    }
+    private $age;
 
     public function getUsername(): string
     {
-        return $this->fields["username"];
+        return $this->username;
     }
 
     public function setUsername(string $username): void
     {
-        $this->fields["username"] = $username;
+        $this->username= $username;
+    }
+
+    public function getAge(): int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): void
+    {
+        $this->age = $age;
+    }
+
+    protected function collectProperties(): array
+    {
+        return [
+            "username" => $this->getUsername(),
+            "age" => $this->getAge()
+        ];
+    }
+
+    public static function find(int $id): User
+    {
+        $sql = "SELECT * FROM " . self::TABLE . " WHERE `id` = :id ;";
+
+        try {
+            $pdoStatement = $this->pdo->prepare($sql);
+            $pdoStatement->execute(["id" => $id]);
+            $pdoObject = $pdoStatement->fetch(PDO::FETCH_OBJ);
+            $user = new User($this->pdo);
+            $user->setId($pdoObject->id);
+            $user->setUsername($pdoObject->username);
+            $user->setAge($pdoObject->age);
+            return $user;
+        } catch (Exception $e) {
+            throw new ActiveRecordException($e->getMessage());
+        }
     }
 }
