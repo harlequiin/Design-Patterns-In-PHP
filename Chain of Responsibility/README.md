@@ -5,9 +5,10 @@ handle the request. Chain the receiving objects and pass requests along the
 chain until one of the objects in the chain handles it.
 
 #### Use the Chain of Responsibility pattern when:
-- more than one object may handle a request, and the handler isn't known previously. The handler
-  is determined automatically.
+
+- more than one object may handle a request, and the handler isn't known previously. 
 - set of objects that can handle a request should be specified dynamically.
+  (The handler is determined automatically).
 
 ### General Structure
 
@@ -20,18 +21,21 @@ chain until one of the objects in the chain handles it.
 - **BaseHandler**: is an optional class where you can put the boilerplate code
   that's common to all handler classes. Here we define a field for referencing
   the next handler object in chain. There are various ways how you can build
-  chains - you may use a setter of the previous handler, as we do here, you may declare
-  the next handler in the constructor etc - it's all up to you and your needs.  
+  chains - you may use a setter of the previous handler, as we do here, you
+  may declare the next handler in the constructor etc - it's all up to you and
+  your needs.  
   This class may also implement some default handling behavior - here it passes
   the execution to the next handler after checking for its existence.
-- **ConcreteHandler{A,B}**: they do the actual processing of the requests.
+- **ConcreteHandlerA**, **ConcreteHandlerB**: they do the actual processing of
+  the requests.  
   After receiving a request each handler decides whether to process it and/or
   pass it further down the chain. There are various conventions on how to go
   about passing the request further - a canonical CoR approach is to pass the
   request _only if_ the handler _can't_ process it. Another common approach
   (particularly in back-end web development) is to pass the request further down the
   chain (of _middlewares_) _only if_ the handler _can_ process it - 
-  if it can't - some sort of error gets thrown and/or an error page displayed to the user.
+  if it can't - some sort of error gets thrown and/or an error page displayed
+  to the user.
 
 ### Our Example
 
