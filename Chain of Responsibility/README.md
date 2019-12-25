@@ -49,11 +49,24 @@ chain until one of the objects in the chain handles it.
 - **RequestHandler** is our "main" _ConcreteHandler_. It composes a middleware stack,
   sends _Requests_ to it by popping them off the stack one by one. If there are
   no middlewares left, it sends the _Request_ to a fallback handler.
+- **NotFoundHandler** acts as the fallback handler. It's a **ConcreteHandler**
+  of a special case - it normally doesn't participate in the _Request_
+  processing - however, if the _Request_ isn't handled by our primary
+  _RequestHandler_ and middleware stack - it acts as a catch-all handler which
+  constructs and returns a "not found" _Response_. We could've easily done
+  without it and let the main _RequestHandler_ handle the unsuccessful
+  requests, but I chose to include this because the
+  [PSR-15 documentation](https://www.php-fig.org/psr/psr-15/meta/#63-example-interface-interactions) includes this in their example.
 - **AbstractMiddleware** acts as a _BaseHandler_ for all our concrete middlewares,
   provides default _process_ method implementation that simply passes the
   _Request_ to the _RequestHandler_. All our concrete middlewares extend this.
 - **AuthorizationMiddleware**, **CacheMiddleware**, **RouterMiddleware** act as
   our _ConcreteHandlers_ for the middleware stack.
+
+PSR-15 standard doesn't define a single way of composing and chaining
+handlers/middlewares - you can do this like in our example, you can copy the
+canonical form, you may use [decoration-based](https://www.php-fig.org/psr/psr-15/meta/#decoration-based-request-handler) request handler, etc.
+This is where flexibility in applying the desing patterns comes in.
 
 [1]: https://i.ibb.co/6Hwsj18/Chain-of-Responsibility.png
 [2]: https://i.ibb.co/G31Vhd0/Chain-of-Responsibility-Example.png 
