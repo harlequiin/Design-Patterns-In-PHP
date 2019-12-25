@@ -41,10 +41,19 @@ chain until one of the objects in the chain handles it.
 
 ![Our example UML diagram][2]
 
-**RequestHandlerInterface** ...
-**MiddlewareInterface** ...
-**RequestHandler** ...
-**AbstractMiddleware** ...
+- **RequestHandlerInterface** together with **MiddlewareInterface**
+  act as our _Handlers_. The reason we have two different interfaces is that
+  PSR-15 standard differentiates between these two even though their roles can
+  be similar - both participate in handling/processing a _Request_.
+  _MiddlewareInterface_ is the one that represents our composed _Handlers_.
+- **RequestHandler** is our "main" _ConcreteHandler_. It composes a middleware stack,
+  sends _Requests_ to it by popping them off the stack one by one. If there are
+  no middlewares left, it sends the _Request_ to a fallback handler.
+- **AbstractMiddleware** acts as a _BaseHandler_ for all our concrete middlewares,
+  provides default _process_ method implementation that simply passes the
+  _Request_ to the _RequestHandler_. All our concrete middlewares extend this.
+- **AuthorizationMiddleware**, **CacheMiddleware**, **RouterMiddleware** act as
+  our _ConcreteHandlers_ for the middleware stack.
 
 [1]: https://i.ibb.co/6Hwsj18/Chain-of-Responsibility.png
 [2]: https://i.ibb.co/G31Vhd0/Chain-of-Responsibility-Example.png 
