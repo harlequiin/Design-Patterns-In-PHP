@@ -9,13 +9,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- * Handler (together with Middleware).
- * Typically CoR pattern defines a single interface (Handler) for objects
+ * Handler.
+ *
+ * Typically, CoR pattern defines a single interface (Handler) for objects
  * that make up the chain, in PSR-15 standard, however, we distinguish
  * RequestHandler and Middleware - they both consume Requests and can 
  * return Response, but Middleware is a way to move common request and response 
- * processing away from the application layer and can be reused, dynamically reconfigured
- * in different order, added, removed.
+ * processing away from the application layer and can be reused and dynamically
+ * reconfigured in different order or added/removed.
  */
 class RequestHandler implements RequestHandlerInterface
 {

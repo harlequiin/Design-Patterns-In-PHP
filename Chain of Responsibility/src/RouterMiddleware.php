@@ -9,7 +9,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 /**
  * Concrete Middleware.
- *
  */
 class RouterMiddleware extends AbstractMiddleware
 {

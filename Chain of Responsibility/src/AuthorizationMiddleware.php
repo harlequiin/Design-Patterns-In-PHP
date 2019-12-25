@@ -9,9 +9,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 /**
- * Handler (together with RequestHandler).
- * Defines default behavior for middlewares which is to delegate
- * the request handling to RequestHandler and return a Response from it.
+ * Concrete Middleware.
  */
 class AuthorizationMiddleware extends AbstractMiddleware
 {
@@ -25,8 +23,10 @@ class AuthorizationMiddleware extends AbstractMiddleware
         $this->responseFactory = $responseFactory;
     }
 
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
+    public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler
+    ): ResponseInterface {
         if (!$this->isAuthorized($request)) {
             return $this->responseFactory->createResponse(403);
         }

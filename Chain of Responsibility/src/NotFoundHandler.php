@@ -9,7 +9,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 /**
- * Handler (together with RequestHandler).
+ * Handler.
+ *
  * Defines default behavior for middlewares which is to delegate
  * the request handling to RequestHandler and return a Response from it.
  */
