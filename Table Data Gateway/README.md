@@ -68,14 +68,14 @@ data and using stored procedures can be _hidden_ under the same interface.
 
 ![Our example UML diagram][1]
 
-**TableGateway** is our abstract superclass. It defines default _find_ and _delete_ 
-methods which both use an _id_ parameter. It also defines abstract _insert_ and
-_update_ methods, with _update_ accepting a mandatory id parameter.  
-**UserGateway** and **PostGateway** both define their specific find methods -
-_findByUsername_ and _findByUser_ respectively, and implement the abstract
-_insert_ and _update_ methods according to their specific needs. We could
-define _insert_ and _update_ methods in the superclass (perhaps each of them
-accepting an associative array of fields => values) and thus avoid the
+- **TableGateway** is our abstract superclass. It defines default _find_ and _delete_
+  methods which both use an _id_ parameter. It also defines abstract _insert_
+  and _update_ methods, with _update_ accepting a mandatory id parameter.
+- **UserGateway** and **PostGateway** both define their specific find methods -
+  _findByUsername_ and _findByUser_ respectively, and implement the abstract
+  _insert_ and _update_ methods according to their specific needs.
+We could define _insert_ and _update_ methods in the superclass (perhaps each of
+them accepting an associative array of fields => values) and thus avoid the
 duplication, however this is a trivial enough example and changes/extensions
 wouldn't be too hard to make. And I've chosen to implement the methods with a
 parameter for each relevant database field to make the method signatures more
