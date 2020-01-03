@@ -5,6 +5,11 @@ namespace harlequiin\Patterns\TableDataGateway;
 
 use PDO;
 
+/**
+ * User Gateway.
+ *
+ * Provides a Table Gateway implementation for User table.
+ */
 class UserGateway extends TableGateway
 {
     protected const TABLE = "user";

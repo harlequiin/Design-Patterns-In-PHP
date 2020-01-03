@@ -5,6 +5,11 @@ namespace harlequiin\Patterns\TableDataGateway;
 
 use PDO;
 
+/**
+ * PostGateway.
+ *
+ * Provides a Table Gateway implementation for Post table.
+ */
 class PostGateway extends TableGateway
 {
     protected const TABLE = "post";

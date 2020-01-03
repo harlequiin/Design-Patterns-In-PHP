@@ -5,6 +5,12 @@ namespace harlequiin\Patterns\TABLEDataGateway;
 
 use PDO;
 
+/**
+ * TableGateway.
+ *
+ * We define basic find and delete methods here that are
+ * the same for all gateways.
+ */
 abstract class TableGateway
 {
     /**
