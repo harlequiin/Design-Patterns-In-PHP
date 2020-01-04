@@ -19,6 +19,9 @@
             "harlequiin\\Patterns\\TableDataGateway\\": "src"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "config": {
         "bin-dir": "bin/"
     }
