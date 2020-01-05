@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace harlequiin\Patterns\TableDataGateway;
 
 use PDO;
+use Exception;
 
 /**
  * PostGateway.
@@ -20,11 +21,10 @@ class PostGateway extends TableGateway
         try {
             $pdoStatement = $this->pdo->prepare($sql);
             $pdoStatement->execute([$id]);
-        } catch (\Exception $e) {
+            return $pdoStatement->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
             throw new GatewayException($e);
         }
-
-        return $pdoStatement->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function insert(string $text = null, int $user_id = null): void
@@ -32,7 +32,7 @@ class PostGateway extends TableGateway
         $sql = "INSERT INTO " . self::TABLE . " VALUES (?, ?);";
         try {
             $this->pdo->prepare($sql)->execute([$text, $user_id]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e);
         }
     }
@@ -42,7 +42,7 @@ class PostGateway extends TableGateway
         $sql = "UPDATE " . self::TABLE . " SET text = :text WHERE id = :id ;";
         try {
             $this->pdo->prepare($sql)->execute(["id" => $id, "text" => $text]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e);
         }
     }

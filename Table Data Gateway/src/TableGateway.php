@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace harlequiin\Patterns\TABLEDataGateway;
 
 use PDO;
+use Exception;
 
 /**
  * TableGateway.
@@ -34,11 +35,10 @@ abstract class TableGateway
         try {
             $pdoStatement = $this->pdo->prepare($sql);
             $pdoStatement->execute([$id]);
-        } catch(\Exception $e) {
+            return $pdoStatement->fetchAll(PDO::FETCH_OBJ);
+        } catch(Exception $e) {
             throw new GatewayException($e);
         }
-
-        return $pdoStatement->fetchAll(PDO::FETCH_OBJ);
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class TableGateway
         try {
             $pdoStatement = $this->pdo->prepare($sql);
             $pdoStatement->execute([$id]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e);
         }
     }
