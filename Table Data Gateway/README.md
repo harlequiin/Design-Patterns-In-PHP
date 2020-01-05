@@ -15,11 +15,11 @@ _Table Data Gateway_ is usually stateless - its role is only to push data back
 and forth. The trickiest thing about _Table Data Gateway_ is how it returns
 information from the query. Even a simple find-by-ID query can return multiple
 data items, but many languages, like PHP, give you only a single return value.
-One way is to return some simple data structure - such as a map, or _associative
-array_. It works but it also may force data to be copied out of the record set
+One way is to return some simple data structure - such as a _map_, or and _associative
+array_. It works but it also may force the data to be copied out of the record set
 that comes from a database into the map (in PHP's PDO access interface you can
 configure what type of structure the query returns - specifying FETCH_ASSOC
-value in PDO connection options or in a fetch method will return an associative
+value in PDO connection options or in a _fetch_ call will return an associative
 array). Maps don't have an explicit interface - a better solution is to use
 some sort of _Data Transfer Object_. It's another object to create but it can
 be used elsewhere. In PHP you can make use of PDO::FETCH_OBJ option for the
@@ -29,12 +29,13 @@ set itself since it gets returned from the SQL query - however it can get quite
 messy - ideally an in-memory object shouldn't know anything about the SQL
 interface. Substituting databases can get difficult since you might need to
 create _Record Sets_ manually in order for database access to stay compatible
-with your application and not every persistent storage method uses them.  
-If you're using a _Domain Model_, you can have the _Table Data Gateway_ return
+with your application, and not every persistent storage method uses them.  
+If you're using a _Domain Model_ you can have the _Table Data Gateway_ return
 the appropriate domain object. The issue with this is that now you have
 bidirectional dependencies between the domain objects and the gateway, the two
 are now closely connected -  which isn't a terrible thing but it's something to
-look out for.
+look out for, since _Domain Model_ is meant to be completely independent (you
+could use a _Seperated Interface_ for gateways).
 
 ### General Structure
 
@@ -47,7 +48,7 @@ its role is to push data back and forth.
 ### When To Use It
 
 Similarly to _Row Data Gateway_ - the first choice is whether to use _Gateway_
-approach at all and then - which one. _Table Data Gateway_ is perhaps the
+approach at all, and then - which one. _Table Data Gateway_ is perhaps the
 easiest database interfacing pattern to use since it maps nicely onto database
 table and because of that - offers a natural point to encapsulate the precise
 access logic of the data source.  
@@ -72,7 +73,7 @@ data and using stored procedures can be _hidden_ under the same interface.
   methods which both use an _id_ parameter. It also defines abstract _insert_
   and _update_ methods, with _update_ accepting a mandatory id parameter.
 - **UserGateway** and **PostGateway** both define their specific find methods -
-  _findByUsername_ and _findByUser_ respectively, and implement the abstract
+  _findByUsername_ and _findByUser_ respectively and implement the abstract
   _insert_ and _update_ methods according to their specific needs.
 We could define _insert_ and _update_ methods in the superclass (perhaps each of
 them accepting an associative array of fields => values) and thus avoid the
