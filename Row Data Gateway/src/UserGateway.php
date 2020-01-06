@@ -4,7 +4,13 @@ declare(strict_types=1);
 namespace harlequiin\Patterns\RowDataGateway;
 
 use PDO;
+use Exception;
 
+/**
+ * UserGateway.
+ *
+ * Row Data Gateway class for the user table.
+ */
 class UserGateway
 {
     /**
@@ -76,7 +82,7 @@ class UserGateway
                 "username" => $this->getUsername(),
                 "age" => $this->getAge()
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e->getMessage());
         }
     }
@@ -91,7 +97,7 @@ class UserGateway
                 "username" => $this->getUsername(),
                 "age" => $this->getAge()
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e->getMessage());
         }
     }
@@ -104,7 +110,7 @@ class UserGateway
             $this->pdo->prepare($sql)->execute([
                 "id" => $this->getId(),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e->getMessage());
         }
     }

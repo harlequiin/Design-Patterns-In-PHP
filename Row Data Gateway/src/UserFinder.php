@@ -5,7 +5,14 @@ namespace harlequiin\Patterns\RowDataGateway;
 
 use harlequiin\Patterns\RowDataGateway\UserGateway;
 use PDO;
+use Exception;
 
+/**
+ * UserFinder.
+ *
+ * Finder class for UserGateways. Splitting out finder
+ * functionality improves the testability of our classes.
+ */
 class UserFinder
 {
     /**
@@ -42,7 +49,7 @@ class UserFinder
 
             return $gateway;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e->getMessage());
         }
     }
@@ -66,7 +73,7 @@ class UserFinder
 
             return $gateway;
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new GatewayException($e->getMessage());
         }
     }
