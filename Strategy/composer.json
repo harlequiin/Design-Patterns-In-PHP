@@ -14,7 +14,9 @@
         "psy/psysh": "*",
         "phpunit/phpunit": "^8.0"
     },
-
+    "scripts": {
+        "test": "phpunit"
+    },
     "autoload": {
         "psr-4": {
             "harlequiin\\Patterns\\Strategy\\": "src/"
